@@ -1,0 +1,28 @@
+<!-- upon click of a button sort the list of elements -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Start List on Button Click</title>
+</head>
+<body>
+  <button id="startButton">Start List</button>
+  <ul id="itemList"></ul>
+
+  <script>
+    document.getElementById("startButton").addEventListener("click", function () {
+      const items = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+      const ul = document.getElementById("itemList");
+
+      // Clear the list first if needed
+      ul.innerHTML = "";
+
+     
+      items.forEach(function (item) {
+        const li = document.createElement("li");  
+        li.textContent = item;                   
+        ul.appendChild(li);                      
+      });
+    });
+  </script>
+</body>
+</html>
