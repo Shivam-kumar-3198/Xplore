@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>getElementsByClassName Example</title>
+  <style>
+    .item {
+      padding: 10px;
+      margin: 5px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Items List</h2>
+
+  <div class="item">Item 1</div>
+  <div class="item">Item 2</div>
+  <div class="item">Item 3</div>
+  <div class="item">Item 4</div>
+
+  <button onclick="highlightItems()">Highlight Items</button>
+
+  <script>
+    function highlightItems() {
+      const items = document.getElementsByClassName("item");
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.backgroundColor = "yellow";
+      }
+    }
+  </script>
+
+</body>
+</html>

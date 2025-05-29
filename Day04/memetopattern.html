@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Toggle & Memento Pattern</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #myImage {
+      width: 300px;
+      cursor: pointer;
+      display: block;
+      margin-bottom: 20px;
+    }
+    #editor {
+      width: 100%;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+    button {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Click the Image to Toggle</h2>
+  <img id="myImage" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="Toggle Image">
+
+  <h2>Text Editor with Undo/Redo</h2>
+  <textarea id="editor" placeholder="Type something..."></textarea><br>
+  <button id="undo">Undo</button>
+  <button id="redo">Redo</button>
+
+  <script>
+    // Image Toggle Functionality
+    const img = document.getElementById("myImage");
+    const image1 = "https://images.unsplash.com/photo-1504384308090-c894fdcc538d";
+    const image2 = "https://images.unsplash.com/photo-1498050108023-c5249f4df085";
+
+    img.addEventListener("click", function () {
+      img.src = img.src.includes("photo-1504384308090-c894fdcc538d") ? image2 : image1;
+    });
+
+    // Memento Pattern Implementation
+    class TextEditor {
+      constructor(textarea) {
+        this.textarea = textarea;
+      }
+
+      getState() {
+        return this.textarea.value;
+      }
+
+      setState(state) {
+        this.textarea.value = state;
+      }
+
+      createMemento() {
+        return new Memento(this.getState());
+      }
+
+      restore(memento) {
+        this.setState(memento.getState());
+      }
+    }
+
+    class Memento {
+      constructor(state) {
+        this.state = state;
+      }
+
+      getState() {
+        return this.state;
+      }
+    }
+
+    class Caretaker {
+      constructor() {
+        this.undoStack = [];
+        this.redoStack = [];
+      }
+
+      save(memento) {
+        this.undoStack.push(memento);
+        this.redoStack = [];
+      }
+
+      undo(currentState) {
+        if (this.undoStack.length === 0) return null;
+        const memento = this.undoStack.pop();
+        this.redoStack.push(new Memento(currentState));
+        return memento;
+      }
+
+      redo(currentState) {
+        if (this.redoStack.length === 0) return null;
+        const memento = this.redoStack.pop();
+        this.undoStack.push(new Memento(currentState));
+        return memento;
+      }
+    }
+
+    const textarea = document.getElementById('editor');
+    const undoBtn = document.getElementById('undo');
+    const redoBtn = document.getElementById('redo');
+
+    const editor = new TextEditor(textarea);
+    const caretaker = new Caretaker();
+
+    // Save initial state
+    caretaker.save(editor.createMemento());
+
+    // Save state on input
+    textarea.addEventListener('input', () => {
+      caretaker.save(editor.createMemento());
+    });
+
+    // Undo button
+    undoBtn.addEventListener('click', () => {
+      const memento = caretaker.undo(editor.getState());
+      if (memento) {
+        editor.restore(memento);
+      }
+    });
+
+    // Redo button
+    redoBtn.addEventListener('click', () => {
+      const memento = caretaker.redo(editor.getState());
+      if (memento) {
+        editor.restore(memento);
+      }
+    });
+  </script>
+
+</body>
+</html>

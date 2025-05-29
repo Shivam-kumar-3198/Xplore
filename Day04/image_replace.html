@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Image on Button Click</title>
+</head>
+
+<style>
+    #changeImageButton{
+        background-color: rgb(117, 36, 203);
+        border-radius: 20%;
+    }
+</style>
+<body>
+
+  <img id="myImage" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="Internet Image" width="300" style="cursor: pointer;">
+  <br>
+  <button id="changeImageButton">Click me</button>
+
+  <script>
+    const img = document.getElementById("myImage");
+    const button = document.getElementById("changeImageButton");
+
+    button.addEventListener("click", function () {
+      if (img.src.includes("photo-1504384308090-c894fdcc538d")) {
+        img.src = "https://images.unsplash.com/photo-1498050108023-c5249f4df085";
+      } else {
+        img.src = "https://images.unsplash.com/photo-1504384308090-c894fdcc538d";
+      }
+    });
+  </script>
+
+</body>
+</html>
