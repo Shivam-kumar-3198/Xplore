@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remove Attribute Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    #enableBtn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Remove Attribute Example</h2>
+
+  <!-- Button initially disabled -->
+  <button id="myButton" disabled>Click Me</button>
+
+  <!-- Button to enable the above button -->
+  <button id="enableBtn">Enable "Click Me" Button</button>
+
+  <script>
+    // JavaScript to remove the "disabled" attribute
+    document.getElementById("enableBtn").addEventListener("click", function() {
+      document.getElementById("myButton").removeAttribute("disabled");
+    });
+  </script>
+
+</body>
+</html>
