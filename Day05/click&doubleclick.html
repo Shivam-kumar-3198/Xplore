@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keyboard and Mouse Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #mouse-area {
+      width: 300px;
+      height: 150px;
+      background-color: #f0f0f0;
+      border: 2px dashed #ccc;
+      margin-bottom: 20px;
+    }
+    #log {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Mouse Events</h2>
+  <div id="mouse-area">Move or click your mouse here</div>
+  <p id="mouse-log">Mouse event data will appear here</p>
+
+  <h2>Keyboard Events</h2>
+  <input type="text" id="keyboard-input" placeholder="Type here..." />
+  <p id="key-log">Key event data will appear here</p>
+
+  <script>
+    // Mouse Events
+    const mouseArea = document.getElementById("mouse-area");
+    const mouseLog = document.getElementById("mouse-log");
+
+    mouseArea.addEventListener("click", function (e) {
+      mouseLog.textContent = `Mouse Clicked at X: ${e.clientX}, Y: ${e.clientY}`;
+    });
+
+    mouseArea.addEventListener("mousemove", function (e) {
+      mouseLog.textContent = `Mouse Moved at X: ${e.clientX}, Y: ${e.clientY}`;
+    });
+
+    mouseArea.addEventListener("mousedown", () => {
+      mouseLog.textContent = "Mouse Button Pressed";
+    });
+
+    mouseArea.addEventListener("mouseup", () => {
+      mouseLog.textContent = "Mouse Button Released";
+    });
+
+    // Keyboard Events
+    const keyboardInput = document.getElementById("keyboard-input");
+    const keyLog = document.getElementById("key-log");
+
+    keyboardInput.addEventListener("keydown", function (e) {
+      keyLog.textContent = `Key Down: ${e.key}`;
+    });
+
+    keyboardInput.addEventListener("keyup", function (e) {
+      keyLog.textContent = `Key Up: ${e.key}`;
+    });
+  </script>
+
+</body>
+</html>

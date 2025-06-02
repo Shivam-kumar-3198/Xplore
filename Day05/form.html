@@ -1,0 +1,150 @@
+<!-- Create a form with name, email and password fiels
+ validate fiels using regex and non regex methods -->
+ <!-- Use different even handlers (focus, blur, submit) -->
+  <!-- Add visual feedback for validation (e.g red border an error) -->
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input.error {
+      border-color: red;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: -8px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: blue;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>User Registration Form</h2>
+  <form id="myForm" novalidate>
+    <label>Name:</label>
+    <input type="text" id="name" />
+    <div class="error-message" id="name-error">Name must be at least 3 characters long.</div>
+
+    <label>Email:</label>
+    <input type="email" id="email" />
+    <div class="error-message" id="email-error">Enter a valid email address.</div>
+
+    <label>Password:</label>
+    <input type="password" id="password" />
+    <div class="error-message" id="password-error">Password must be at least 6 characters with letters and numbers.</div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("myForm");
+
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    const nameError = document.getElementById("name-error");
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
+
+    // Regex Patterns
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+    // Focus event: clear error
+    [nameInput, emailInput, passwordInput].forEach(input => {
+      input.addEventListener("focus", () => {
+        input.classList.remove("error");
+        input.nextElementSibling.style.display = "none";
+      });
+    });
+
+    // Blur event: validate on leaving the field
+    nameInput.addEventListener("blur", () => {
+      if (nameInput.value.trim().length < 3) {
+        showError(nameInput, nameError);
+      }
+    });
+
+    emailInput.addEventListener("blur", () => {
+      if (!emailPattern.test(emailInput.value.trim())) {
+        showError(emailInput, emailError);
+      }
+    });
+
+    passwordInput.addEventListener("blur", () => {
+      if (!passwordPattern.test(passwordInput.value.trim())) {
+        showError(passwordInput, passwordError);
+      }
+    });
+
+    // Submit event
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      let valid = true;
+
+      if (nameInput.value.trim().length < 3) {
+        showError(nameInput, nameError);
+        valid = false;
+      }
+
+      if (!emailPattern.test(emailInput.value.trim())) {
+        showError(emailInput, emailError);
+        valid = false;
+      }
+
+      if (!passwordPattern.test(passwordInput.value.trim())) {
+        showError(passwordInput, passwordError);
+        valid = false;
+      }
+
+      if (valid) {
+        alert("Form submitted successfully!");
+        form.reset();
+      }
+    });
+
+    // Utility function to show error
+    function showError(input, errorElement) {
+      input.classList.add("error");
+      errorElement.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
